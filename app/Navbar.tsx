@@ -5,24 +5,32 @@ export default function Navbar() {
     const [isAuth, setIsAuth] = useState(false);
 
     useState(() => {
-        setIsAuth(localStorage.getItem('authHeader') ? true : false);
+        setIsAuth(sessionStorage.getItem('authHeader') ? true : false);
     },);
 
     return (
         <nav>
-            <ul className='flex items-center justify-center gap-5 mt-3'>
+            <ul className='flex items-center justify-center gap-5 p-3 mt-3'>
                 <li>
                     <a href="/">Home</a>
                 </li>
-                <li>
-                    {isAuth ? (
+                {isAuth ? (
+                    <li>
                         <button onClick={logout}>
                             Logout
                         </button>
-                    ) : (
-                        <a href="/login">Login</a>
-                    )}
-                </li>
+                    </li>
+                ) : (
+                    <div className="flex gap-5">
+                        <li>
+                            <a href="/login">Login</a>
+                        </li>
+                        <li>
+                            <a href="/register">Register</a>
+                        </li>
+                    </div>
+                )}
+
             </ul>
         </nav>
     );
