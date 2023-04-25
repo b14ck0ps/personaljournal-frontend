@@ -31,7 +31,13 @@ export default function JournalEntries() {
 
     return (
         <div className="p-4">
-            <h1 className="mb-4 text-xl font-bold">Journal Entries</h1>
+            <div className='flex justify-between mx-2'>
+                <h1 className="mb-4 text-xl font-bold">Journal Entries</h1>
+                <a
+                    href='/journal/add'
+                    className='px-3 m-2 border border-amber-400 hover:bg-amber-400 '
+                >Add new</a>
+            </div>
             <ul>
                 {entries.map(entry => (
                     <li key={entry.id} className="p-4 mb-2 bg-gray-100 rounded-lg">
