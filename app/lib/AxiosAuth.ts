@@ -1,8 +1,10 @@
 import axios from "axios";
 
-const username = 'johndoe';
-const password = 'mypassword';
-const authHeader = 'Basic ' + btoa(username + ':' + password);
+let authHeader = '';
+
+if (typeof localStorage !== 'undefined') {
+    authHeader = localStorage.getItem('authHeader');
+}
 
 export const axiosWithAuth = axios.create({
     baseURL: 'http://localhost:8081/api',

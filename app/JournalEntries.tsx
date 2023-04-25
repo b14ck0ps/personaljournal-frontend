@@ -2,11 +2,13 @@
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { axiosWithAuth } from './lib/AxiosAuth';
+import { JournalEntry } from './Types';
 
 export default function JournalEntries() {
     const router = useRouter();
 
     const [entries, setEntries] = useState<JournalEntry[]>([]);
+
     useEffect(() => {
         axiosWithAuth.get('/journalEntry')
             .then(response => {
@@ -26,6 +28,7 @@ export default function JournalEntries() {
                 router.push('/login'); // Redirect to login page on error
             });
     }, []);
+
     return (
         <div className="p-4">
             <h1 className="mb-4 text-xl font-bold">Journal Entries</h1>
