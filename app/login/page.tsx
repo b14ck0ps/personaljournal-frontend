@@ -30,6 +30,7 @@ export default function Login() {
                 const authHeader = 'Basic ' + btoa(username + ':' + password);
                 // Save the authentication header in local storage
                 sessionStorage.setItem('authHeader', authHeader);
+                sessionStorage.setItem('username', username);
 
                 window.location.href = '/'; // Redirect to home page
             } else {

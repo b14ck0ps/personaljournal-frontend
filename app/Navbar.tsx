@@ -15,11 +15,17 @@ export default function Navbar() {
                     <a href="/">Home</a>
                 </li>
                 {isAuth ? (
-                    <li>
-                        <button onClick={logout}>
-                            Logout
-                        </button>
-                    </li>
+                    <div className="flex gap-5">
+                        <li>
+                            <a href="/profile">Profile</a>
+                        </li>
+                        <li>
+                            <button onClick={logout}>
+                                Logout
+                            </button>
+                        </li>
+
+                    </div>
                 ) : (
                     <div className="flex gap-5">
                         <li>
