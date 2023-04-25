@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
-import { axiosWithAuth } from './lib/AxiosAuth';
+import axiosWithAuth from './lib/AxiosAuth';
 import { JournalEntry } from './Types';
 
 export default function JournalEntries() {

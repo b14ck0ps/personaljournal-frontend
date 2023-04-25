@@ -1,14 +1,16 @@
 import axios from "axios";
 
-let authHeader = '';
+let authHeader: string = '';
 
-if (typeof localStorage !== 'undefined') {
-    authHeader = localStorage.getItem('authHeader');
+if (typeof sessionStorage !== 'undefined' && authHeader !== null) {
+    authHeader = sessionStorage.getItem('authHeader') || '';
 }
 
-export const axiosWithAuth = axios.create({
+const axiosWithAuth = axios.create({
     baseURL: 'http://localhost:8081/api',
     headers: {
         'Authorization': authHeader
     }
 });
+
+export default axiosWithAuth;

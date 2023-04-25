@@ -29,7 +29,7 @@ export default function Login() {
             if (res.status === 200) {
                 const authHeader = 'Basic ' + btoa(username + ':' + password);
                 // Save the authentication header in local storage
-                localStorage.setItem('authHeader', authHeader);
+                sessionStorage.setItem('authHeader', authHeader);
 
                 window.location.href = '/'; // Redirect to home page
             } else {
