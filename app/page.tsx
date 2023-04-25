@@ -3,21 +3,11 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { JournalEntry } from './Types';
+import { axiosWithAuth } from './lib/AxiosAuth';
 
 
 export default function Home() {
   const router = useRouter();
-
-  const username = 'johndoe';
-  const password = 'mypassword';
-  const authHeader = 'Basic ' + btoa(username + ':' + password);
-
-  const axiosWithAuth = axios.create({
-    baseURL: 'http://localhost:8081/api',
-    headers: {
-      'Authorization': authHeader
-    }
-  });
 
   const [entries, setEntries] = useState<JournalEntry[]>([]);
   useEffect(() => {
