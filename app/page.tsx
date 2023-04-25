@@ -2,23 +2,8 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { JournalEntry } from './Types';
 
-interface JournalEntry {
-  id: number;
-  title: string;
-  body: string;
-  createdAt: Date;
-  updatedAt: Date;
-  user: {
-    id: number;
-    username: string;
-    password: string;
-    name: string;
-    address: string;
-    email: string;
-    image: string;
-  };
-}
 
 export default function Home() {
   const router = useRouter();
