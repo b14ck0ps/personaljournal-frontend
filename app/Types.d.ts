@@ -22,3 +22,8 @@ export interface UserProfile {
   email: string;
   image: string;
 }
+export type Props = {
+  params: {
+    id: string;
+  }
+};
