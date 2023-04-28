@@ -12,7 +12,7 @@ export default function Login() {
 
     useState(() => {
         // Check if the user is already logged in
-        if (localStorage.getItem('authHeader')) {
+        if (sessionStorage.getItem('authHeader')) {
             window.location.href = '/'; // Redirect to home page
         }
         else {
