@@ -15,6 +15,7 @@ export default function JournalEntries() {
     const [entriesPerPage, setEntriesPerPage] = useState(5);
     const [entries, setEntries] = useState<JournalEntryWithTag[]>([]);
     const [tags, setTags] = useState<Tag[]>([]);
+    const [selectedTag, setSelectedTag] = useState<Tag | null>(null);
 
     useEffect(() => {
         axiosWithAuth.get('/journalEntry')
@@ -63,7 +64,11 @@ export default function JournalEntries() {
 
     const indexOfLastEntry = currentPage * entriesPerPage;
     const indexOfFirstEntry = indexOfLastEntry - entriesPerPage;
-    const currentEntries = entries.slice(indexOfFirstEntry, indexOfLastEntry);
+
+    let currentEntries = entries.slice(indexOfFirstEntry, indexOfLastEntry);
+    if (selectedTag) {
+        currentEntries = currentEntries.filter(entry => entry.tagId === selectedTag.id);
+    }
 
     const pageNumbers = [];
     for (let i = 1; i <= Math.ceil(entries.length / entriesPerPage); i++) {
@@ -72,10 +77,22 @@ export default function JournalEntries() {
 
     const handlePaginationClick = (pageNumber: number) => setCurrentPage(pageNumber);
 
+    const handleTagFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const tagId = parseInt(event.target.value);
+        setSelectedTag(tags.find(tag => tag.id === tagId) || null);
+        setCurrentPage(1);
+    };
+
     return (
         <div className="p-4">
             <div className='flex justify-between mx-2'>
                 <h1 className="mb-4 text-xl font-bold">Journal Entries</h1>
+                <select className='px-3 py-2 m-2 border border-gray-400 ' onChange={handleTagFilterChange}>
+                    <option value={0}>All</option>
+                    {tags.map(tag => (
+                        <option value={tag.id} key={tag.id}>{tag.name}</option>
+                    ))}
+                </select>
                 <a
                     href='/journal/add'
                     className='px-3 m-2 border border-amber-400 hover:bg-amber-400 '
