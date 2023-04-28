@@ -56,6 +56,16 @@ const JournalEntryView = ({ params }: Props) => {
             });
     };
 
+    const handleCommentDelete = (commentId: number) => {
+        if (!window.confirm("Are you sure you want to delete this comment?")) {
+            return;
+        }
+        axiosWithAuth.delete(`/journal-comments/${commentId}`).then((response) => {
+            setComments(comments.filter((comment) => comment.id !== commentId));
+        });
+    };
+
+
     if (!journalEntry) {
         return <div>Loading...</div>;
     }
@@ -86,6 +96,13 @@ const JournalEntryView = ({ params }: Props) => {
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <p className="text-sm font-medium text-gray-900">{comment.username}</p>
+                                    {comment.username === sessionStorage.getItem("username") && (
+                                        <div>
+                                            <button type="button" className="float-right text-sm text-red-500 hover:font-bold" onClick={() => handleCommentDelete(comment.id)}>
+                                                Delete
+                                            </button>
+                                        </div>
+                                    )}
                                     {comment.created_at && <p className="text-sm text-gray-500">{new Date(...comment.created_at).toLocaleDateString()}</p>}
                                     <p className="mt-1 text-sm text-gray-700">{comment.body}</p>
                                 </div>
