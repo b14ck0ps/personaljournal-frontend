@@ -118,6 +118,8 @@ export default function EditProfilePage() {
             .catch((error) => {
                 console.error(error);
             });
+        const authHeader = 'Basic ' + btoa(username + ':' + password);
+        sessionStorage.setItem('authHeader', authHeader);
     }
 
 
