@@ -84,7 +84,7 @@ export default function JournalEntries() {
             </div>
             <ul>
                 {currentEntries.map(entry => (
-                    <Link href="/journal/[id]" as={`/journal/${entry.id}`} key={entry.id}>
+                    <Link href={`/journal/edit/${entry.id}`} key={entry.id}>
                         <li className="p-4 mb-2 bg-gray-100 rounded-lg : hover:bg-gray-200">
                             <h2 className="text-lg font-bold">{entry.title}</h2>
                             <p className="mb-2 text-sm text-gray-500">Created on {new Date(entry.createdAt).toLocaleDateString()}</p>
