@@ -8,6 +8,10 @@ const JournalEntryView = ({ params }: Props) => {
     const [journalEntry, setJournalEntry] = useState<JournalEntry | null>(null);
     const [comments, setComments] = useState<Comment[]>([]);
     const [userId, setUserId] = useState<number>();
+    const [editComment, setEditComment] = useState<Number | null>();
+
+    const [commentBody, setCommentBody] = useState("")
+
 
     useEffect(() => {
         axiosWithAuth
@@ -65,6 +69,18 @@ const JournalEntryView = ({ params }: Props) => {
         });
     };
 
+    const handleCommentUpdate = (commentId: number, commentBody: string) => {
+        axiosWithAuth.put(`/journal-comments`, {
+            id: commentId,
+            body: commentBody,
+            journal_entry_id: id,
+            user_id: userId,
+        }).then((response) => {
+            window.location.reload();
+        });
+    }
+
+
 
     if (!journalEntry) {
         return <div>Loading...</div>;
@@ -101,10 +117,38 @@ const JournalEntryView = ({ params }: Props) => {
                                             <button type="button" className="float-right text-sm text-red-500 hover:font-bold" onClick={() => handleCommentDelete(comment.id)}>
                                                 Delete
                                             </button>
+                                            <button type="button" className="float-right mr-2 text-sm text-gray-500 hover:text-gray-700" onClick={() => setEditComment(comment.id)}>
+                                                Edit
+                                            </button>
                                         </div>
                                     )}
+
                                     {comment.created_at && <p className="text-sm text-gray-500">{new Date(...comment.created_at).toLocaleDateString()}</p>}
-                                    <p className="mt-1 text-sm text-gray-700">{comment.body}</p>
+                                    {editComment === comment.id ? (
+                                        <input
+                                            type="text"
+                                            name="body"
+                                            className="w-full p-1 my-1 border border-gray-300 rounded"
+                                            defaultValue={comment.body}
+                                            onChange={(e) => setCommentBody(e.target.value)}
+                                        />
+
+                                    ) : (
+                                        <p className="mt-1 text-sm text-gray-700">{comment.body}</p>
+                                    )}
+                                    {editComment === comment.id ? (
+                                        <div>
+                                            <button type="button" className="px-2 text-sm text-blue-500 border border-blue-500 hover:bg-blue-500 hover:text-black " onClick={() =>
+                                                handleCommentUpdate(comment.id, commentBody)}>
+                                                Update
+                                            </button>
+                                            <button type="button" className="ml-2 text-sm text-gray-500 hover:text-gray-700" onClick={() => setEditComment(null)}>
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    ) : null}
+
+
                                 </div>
                             </div>
                         </li>
@@ -112,9 +156,10 @@ const JournalEntryView = ({ params }: Props) => {
                 </ul>
             ) : (
                 <p>No comments yet.</p>
-            )}
+            )
+            }
 
-        </div>
+        </div >
     );
 };
 
