@@ -12,6 +12,10 @@ const JournalEntryField = ({ params }: Props) => {
 
     useEffect(() => {
         const username = sessionStorage.getItem("username");
+        if (!username) {
+            window.location.href = "/login";
+            return;
+        }
         axiosWithAuth
             .get(`/user/${username}`)
             .then((response) => {

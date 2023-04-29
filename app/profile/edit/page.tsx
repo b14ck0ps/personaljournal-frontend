@@ -23,7 +23,7 @@ export default function EditProfilePage() {
         const username = sessionStorage.getItem("username");
 
         if (!username) {
-            // handle missing username
+            window.location.href = "/login";
             return;
         }
 

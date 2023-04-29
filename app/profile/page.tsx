@@ -10,7 +10,7 @@ export default function ProfilePage() {
     useEffect(() => {
         const username = sessionStorage.getItem("username");
         if (!username) {
-            // handle missing username
+            window.location.href = "/login";
             return;
         }
 

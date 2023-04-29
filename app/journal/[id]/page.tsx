@@ -1,7 +1,7 @@
 'use client';
 import { Comment, JournalEntry, Props } from "@/app/Types";
 import axiosWithAuth from "@/app/lib/AxiosAuth";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 
 const JournalEntryView = ({ params }: Props) => {
     const id = params.id;
@@ -14,6 +14,11 @@ const JournalEntryView = ({ params }: Props) => {
 
 
     useEffect(() => {
+        const username = sessionStorage.getItem("username");
+        if (!username) {
+            window.location.href = "/login";
+            return;
+        }
         axiosWithAuth
             .get(`/journalEntry/${id}`)
             .then((response) => {
@@ -22,7 +27,7 @@ const JournalEntryView = ({ params }: Props) => {
             .catch((error) => {
                 console.error(error);
             });
-        axiosWithAuth.get(`/user/${sessionStorage.getItem("username")}`).then((response) => {
+        axiosWithAuth.get(`/user/${username}`).then((response) => {
             setUserId(response.data.id);
         });
     }, []);
