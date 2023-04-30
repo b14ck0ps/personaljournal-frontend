@@ -103,7 +103,9 @@ export default function JournalEntries() {
                     <Link href="/journal/[id]" as={`/journal/${entry.id}`} key={entry.id}>
                         <li className="p-4 mb-2 bg-gray-100 rounded-lg : hover:bg-gray-200">
                             <div className='flex gap-3 mb-4'>
-                                <img className="h-12 rounded-xl " src={entry.userImage} alt="Journal entry image" />
+                                <div className="w-12 h-12 overflow-hidden rounded-lg">
+                                    <img src={entry.userImage} alt={entry.username} className="object-cover object-center w-full h-full" />
+                                </div>
                                 <div>
                                     <h2 className="text-lg font-bold">{entry.title}</h2>
                                     <p className="mb-2 text-sm text-gray-500">Created on {new Date(entry.createdAt).toLocaleDateString()}</p>

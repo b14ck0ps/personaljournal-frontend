@@ -31,7 +31,9 @@ export default function ProfilePage() {
     return (
         <div>
             <div className="flex flex-col items-center mt-5">
-                <img src={userProfile.image} alt="Profile" className="object-cover w-24 h-24 rounded-full" />
+                <div className="w-24 h-24 overflow-hidden rounded-full">
+                    <img src={userProfile.image} alt="dp" className="object-cover object-center w-full h-full" />
+                </div>
                 <h1 className="text-2xl font-bold">{userProfile.name}</h1>
                 <p className="text-gray-500">{userProfile.address}</p>
                 <p className="text-gray-500">{userProfile.email}</p>

@@ -129,7 +129,9 @@ export default function EditProfilePage() {
 
     return (
         <div className="flex flex-col items-center mt-5">
-            <img src={image} alt="Profile" className="object-cover w-24 h-24 rounded-full" />
+            <div className="w-24 h-24 overflow-hidden rounded-full">
+                <img src={image} alt="dp" className="object-cover object-center w-full h-full" />
+            </div>
             <form onSubmit={handleSubmit} className="w-64">
                 <label htmlFor="name" className="block mb-2 font-bold text-gray-700">
                     Name

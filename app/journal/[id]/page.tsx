@@ -96,7 +96,9 @@ const JournalEntryView = ({ params }: Props) => {
     return (
         <div className="flex flex-col w-1/2 mx-auto mt-5">
             <div className="flex items-center">
-                <img className="h-10 ml-3 rounded-xl" src={userImage} alt="" />
+                <div className="w-12 h-12 ml-2 overflow-hidden rounded-lg">
+                    <img src={userImage} alt={journalEntry.user.name} className="object-cover object-center w-full h-full" />
+                </div>
                 <h1 className="px-3 text-xl font-bold">{journalEntry.title}</h1>
             </div>
             <p className="px-3 mt-3 text-sm text-gray-500">
@@ -118,7 +120,9 @@ const JournalEntryView = ({ params }: Props) => {
                         <li key={comment.id} className="py-4">
                             <div className="flex space-x-3">
                                 <div className="flex-shrink-0">
-                                    <img className="w-10 h-10 rounded-full" src={comment.userImage} alt="" />
+                                    <div className="w-12 h-12 overflow-hidden rounded-lg">
+                                        <img src={comment.userImage} alt="" className="object-cover object-center w-full h-full" />
+                                    </div>
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <p className="text-sm font-medium text-gray-900">{comment.username}</p>
