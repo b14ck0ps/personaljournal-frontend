@@ -8,6 +8,7 @@ const JournalEntryView = ({ params }: Props) => {
     const [journalEntry, setJournalEntry] = useState<JournalEntry | null>(null);
     const [comments, setComments] = useState<Comment[]>([]);
     const [userId, setUserId] = useState<number>();
+    const [userImage, setUserImage] = useState<string>();
     const [editComment, setEditComment] = useState<Number | null>();
 
     const [commentBody, setCommentBody] = useState("")
@@ -23,6 +24,7 @@ const JournalEntryView = ({ params }: Props) => {
             .get(`/journalEntry/${id}`)
             .then((response) => {
                 setJournalEntry(response.data);
+                setUserImage(response.data.user.image);
             })
             .catch((error) => {
                 console.error(error);
@@ -93,7 +95,10 @@ const JournalEntryView = ({ params }: Props) => {
 
     return (
         <div className="flex flex-col w-1/2 mx-auto mt-5">
-            <h1 className="px-3 text-xl font-bold">{journalEntry.title}</h1>
+            <div className="flex items-center">
+                <img className="h-10 ml-3 rounded-xl" src={userImage} alt="" />
+                <h1 className="px-3 text-xl font-bold">{journalEntry.title}</h1>
+            </div>
             <p className="px-3 mt-3 text-sm text-gray-500">
                 Written by {journalEntry.user.name} on{" "}
                 {new Date(...journalEntry.createdAt).toLocaleDateString()}

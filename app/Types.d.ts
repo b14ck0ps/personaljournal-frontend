@@ -4,9 +4,8 @@ export interface JournalEntry {
   body: string;
   createdAt: Date;
   updatedAt: Date;
-  user: {
-    name: string;
-  }
+  username: string;
+  userImage: string;
   tagName: string;
   tagId: number;
 }
