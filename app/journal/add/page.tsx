@@ -16,6 +16,9 @@ const JournalEntryField = () => {
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
 
+    const [titleError, setTitleError] = useState("");
+    const [bodyError, setBodyError] = useState("");
+
     useEffect(() => {
         axiosWithAuth
             .get(`/user/${username}`)
@@ -39,6 +42,20 @@ const JournalEntryField = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        if (title.length < 1) {
+            setTitleError("Title is required");
+            return;
+        } else {
+            setTitleError("");
+        }
+
+        if (body.length < 1) {
+            setBodyError("Body is required");
+            return;
+        } else {
+            setBodyError("");
+        }
+
         axiosWithAuth.post("/journalEntry", {
             username: username,
             title: title,
@@ -61,6 +78,7 @@ const JournalEntryField = () => {
                 onChange={(e) => setTitle(e.target.value)}
                 className="p-1 my-2 border rounded-md"
             />
+            {titleError && <p className="text-red-500">{titleError}</p>}
 
             <label htmlFor="tag">Tag:</label>
             <select
@@ -74,7 +92,6 @@ const JournalEntryField = () => {
                 }}
                 className="p-1 my-2 border rounded-md"
             >
-                <option value="">Select a tag</option>
                 {tags.map((tag) => (
                     <option key={tag.id} value={tag.id}>{tag.name}</option>
                 ))}
@@ -88,6 +105,7 @@ const JournalEntryField = () => {
                 onChange={(e) => setBody(e.target.value)}
                 className="p-1 my-2 border rounded-md"
             ></textarea>
+            {bodyError && <p className="text-red-500">{bodyError}</p>}
 
             <button type="submit" className="px-4 py-2 text-white bg-blue-500 rounded w-52">
                 Post

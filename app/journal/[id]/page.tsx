@@ -13,6 +13,9 @@ const JournalEntryView = ({ params }: Props) => {
 
     const [commentBody, setCommentBody] = useState("")
 
+    const [commentError, setCommentError] = useState("");
+    const [commentUpdateError, setCommentUpdateError] = useState("");
+
 
     useEffect(() => {
         const username = sessionStorage.getItem("username");
@@ -48,6 +51,12 @@ const JournalEntryView = ({ params }: Props) => {
     const handleCommentSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
+        if (formData.get("body") === "") {
+            setCommentError("Comment is required");
+            return;
+        } else {
+            setCommentError("");
+        }
         const newComment = {
             body: formData.get("body") as string,
             journal_entry_id: id,
@@ -77,6 +86,12 @@ const JournalEntryView = ({ params }: Props) => {
     };
 
     const handleCommentUpdate = (commentId: number, commentBody: string) => {
+        if (commentBody === "") {
+            setCommentUpdateError("Comment is required");
+            return;
+        } else {
+            setCommentUpdateError("");
+        }
         axiosWithAuth.put(`/journal-comments`, {
             id: commentId,
             body: commentBody,
@@ -108,9 +123,10 @@ const JournalEntryView = ({ params }: Props) => {
             <p className="p-3 my-2 border border-gray-200">{journalEntry.body}</p>
             <form className="flex flex-col w-1/2 mx-auto my-5" onSubmit={handleCommentSubmit}>
                 <label className="text-gray-700">Add a comment:</label>
-                <textarea name="body" className="w-full h-24 p-2 mt-2 text-gray-700 border border-gray-400 resize-none" required></textarea>
+                <textarea name="body" className="w-full h-24 p-2 mt-2 text-gray-700 border border-gray-400 resize-none"></textarea>
+                {commentError && <p className="text-sm text-red-500">{commentError}</p>}
                 <button type="submit" className="px-4 py-2 mt-4 text-white bg-blue-500 rounded hover:bg-blue-600 focus:bg-blue-700 focus:outline-none">
-                    Submit
+                    Comment
                 </button>
             </form>
             <h2 className="px-3 mt-5 mb-3 text-lg font-bold">Comments</h2>
@@ -152,6 +168,7 @@ const JournalEntryView = ({ params }: Props) => {
                                     )}
                                     {editComment === comment.id ? (
                                         <div>
+                                            {commentUpdateError && <p className="text-sm text-red-500">{commentUpdateError}</p>}
                                             <button type="button" className="px-2 text-sm text-blue-500 border border-blue-500 hover:bg-blue-500 hover:text-black " onClick={() =>
                                                 handleCommentUpdate(comment.id, commentBody)}>
                                                 Update

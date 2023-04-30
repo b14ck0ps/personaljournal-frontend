@@ -10,6 +10,9 @@ const JournalEntryField = ({ params }: Props) => {
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
 
+    const [titleError, setTitleError] = useState("");
+    const [bodyError, setBodyError] = useState("");
+
     useEffect(() => {
         const username = sessionStorage.getItem("username");
         if (!username) {
@@ -38,6 +41,20 @@ const JournalEntryField = ({ params }: Props) => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        if (title.length < 1) {
+            setTitleError("Title is required");
+            return;
+        } else {
+            setTitleError("");
+        }
+
+        if (body.length < 1) {
+            setBodyError("Body is required");
+            return;
+        } else {
+            setBodyError("");
+        }
 
         axiosWithAuth.put(`/journalEntry/`, {
             id: id,
@@ -70,6 +87,7 @@ const JournalEntryField = ({ params }: Props) => {
                 onChange={(e) => setTitle(e.target.value)}
                 className="p-1 my-2 border rounded-md"
             />
+            {titleError && <p className="text-red-500">{titleError}</p>}
             <label htmlFor="body">Body:</label>
             <textarea
                 id="body"
@@ -78,6 +96,7 @@ const JournalEntryField = ({ params }: Props) => {
                 onChange={(e) => setBody(e.target.value)}
                 className="p-1 my-2 border rounded-md"
             ></textarea>
+            {bodyError && <p className="text-red-500">{bodyError}</p>}
             <div className="flex justify-between">
                 <button type="submit" className="px-4 py-2 text-white bg-green-500 rounded w-52 hover:bg-green-600">
                     Update
