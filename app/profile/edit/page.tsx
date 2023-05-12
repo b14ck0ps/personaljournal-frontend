@@ -11,6 +11,7 @@ export default function EditProfilePage() {
     const [address, setAddress] = useState("");
     const [email, setEmail] = useState("");
     const [image, setImage] = useState("");
+    const [oldPassword, setOldPassword] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [nameError, setNameError] = useState("");
@@ -36,7 +37,7 @@ export default function EditProfilePage() {
                 setEmail(response.data.email);
                 setImage(response.data.image);
                 setId(response.data.id);
-                setPassword(response.data.password);
+                setOldPassword(response.data.password);
                 setUsername(response.data.username);
             })
             .catch((error) => {
@@ -78,25 +79,24 @@ export default function EditProfilePage() {
         }
 
         // Validate password field
-        if (!password) {
-            setPasswordError("Password field is required.");
-            validationError = true;
-        } else if (password.length < 8) {
+        if (password !== "" && password.length < 8) {
             setPasswordError("Password must be at least 8 characters long.");
             validationError = true;
         } else {
             setPasswordError("");
         }
 
-        // Validate confirm password field
-        if (!confirmPassword) {
-            setConfirmPasswordError("Confirm Password field is required.");
-            validationError = true;
-        } else if (password !== confirmPassword) {
-            setConfirmPasswordError("Passwords do not match.");
-            validationError = true;
-        } else {
-            setConfirmPasswordError("");
+        if (password !== "") {
+            // Validate confirm password field
+            if (!confirmPassword) {
+                setConfirmPasswordError("Confirm Password field is required.");
+                validationError = true;
+            } else if (password !== confirmPassword) {
+                setConfirmPasswordError("Passwords do not match.");
+                validationError = true;
+            } else {
+                setConfirmPasswordError("");
+            }
         }
 
         if (validationError) {
@@ -113,13 +113,15 @@ export default function EditProfilePage() {
         axiosWithAuth
             .put(`/user/`, { name, address, email, image, id, password, username })
             .then(() => {
+                if (password !== "") {
+                    const authHeader = 'Basic ' + btoa(username + ':' + password);
+                    sessionStorage.setItem('authHeader', authHeader);
+                }
                 window.location.href = "/profile";
             })
             .catch((error) => {
                 console.error(error);
             });
-        const authHeader = 'Basic ' + btoa(username + ':' + password);
-        sessionStorage.setItem('authHeader', authHeader);
     }
 
 
