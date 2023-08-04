@@ -3,9 +3,19 @@ The Personal Journal Next.js Application is a front-end application built on top
 
 The Personal Journal Next.js Application provides a clean and intuitive interface for users to perform CRUD operations on their journal entries, tags, and comments. The application uses server-side rendering to provide fast loading times and a seamless user experience. It also includes features such as authentication and authorization to ensure the security of user data.
 
-Backend For this available at https://github.com/b14ck0ps/Personal-Journal-SpringRESTfullApi using Spring RESTful api
+Backend For this build with Spring Framework available at [Backend💻](https://github.com/b14ck0ps/Personal-Journal-SpringRESTfullApi) using Spring RESTful api
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Demo
+
+Register and Login
+<img src="./docs/assets/login.gif" alt="reg_log_demo">
+
+Post a new entry
+<img src="./docs/assets/post.gif" alt="post">
+
+Comment on an entry
+<img src="./docs/assets/comment.gif" alt="comment">
+
 
 ## Getting Started
 
